@@ -15,6 +15,7 @@ from app.users.users import (
     fastapi_users,
     google_oauth_client,
 )
+from fastapi.middleware.cors import CORSMiddleware
 
 
 @asynccontextmanager
@@ -60,6 +61,13 @@ app.include_router(
 app.include_router(courses_router)
 app.include_router(streams_router)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allow_headers=["Content-Type", "Authorization"],
+)
 
 @app.get("/authenticated-route", openapi_extra=OPENAPI_SECURITY_EXTRA)
 async def authenticated_route(user: User = Depends(current_active_user)):

@@ -34,6 +34,18 @@ services:
       timeout: 5s
       retries: 5
 
+  crossdo_fronted:
+    container_name: crossdo_fronted
+    environment:
+      - VITE_API_URL=crossdo_backend:8000
+    build:
+      context: ../crossdo-frontend/
+      dockerfile: Dockerfile
+    ports:
+      - 80:3000
+    networks:
+      - crossdo
+
 networks:
   crossdo:
     name: crossdo
