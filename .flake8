@@ -1,0 +1,22 @@
+[flake8]
+exclude =
+        protos/**, migrations/**, .git, .vscode, .idea, .pytest_cache, .mypy_cache,
+        **/__init__.py, env, .env, .venv, .venvx, ./test*.py,
+ignore =
+        # A003: 0o prefix is not a part of octal number
+        A003,
+        # B008: Do not perform function calls in argument defaults, B902: Invalid first argument used for method
+        B008, B902,
+        # Docstrings rules
+        D100, D101, D102, D103, D105, D106, D107, D200, D202, D203, D205, D301, D400, D401, D413,
+        # E501: Line too long, we use 120 chars per line
+        E501,
+        # F401: Imported but unused
+        F401,
+        # N812: Lowercase imported as non lowercase, we use lowercase
+        N812,
+        # Q000: Remove bad quotes, we use double quotes
+        Q000,
+        # W503: Line break occurred before a binary operator, we use after
+        W503
+max-line-length = 120

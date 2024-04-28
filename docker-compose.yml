@@ -1,0 +1,43 @@
+services:
+  crossdo_backend:
+    container_name: crossdo_backend
+    restart: no
+    env_file:
+      - .dev.env
+    ports:
+      - 8000:8000
+    build:
+      dockerfile: ./Dockerfile
+    command: poetry run serve
+    networks:
+      - crossdo
+    depends_on:
+      crossdo_db:
+        condition: service_healthy
+
+  crossdo_db:
+    image: postgres:15
+    container_name: crossdo_db
+    environment:
+      - POSTGRES_DB=dev_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - crossdo_db_volume:/var/lib/postgresql/data
+    networks:
+      - crossdo
+    healthcheck:
+      test: ["CMD-SHELL", "psql -U postgres -c 'select 1'"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+networks:
+  crossdo:
+    name: crossdo
+
+volumes:
+  crossdo_db_volume:
+    name: crossdo_db_volume

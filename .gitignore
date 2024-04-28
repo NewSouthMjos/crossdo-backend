@@ -1,0 +1,11 @@
+.pytest_cache
+.venv
+.venvx
+.vscode/
+*__pycache__*
+*.pyc
+\.idea
+old/
+test.py
+.dev.env
+.activate
